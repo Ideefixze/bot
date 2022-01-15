@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
 
+from paginator import Paginator
+
 
 class Greetings(commands.Cog):
     def __init__(self, bot):
@@ -22,3 +24,8 @@ class Greetings(commands.Cog):
         else:
             await ctx.send('Hello {0.name}... This feels familiar.'.format(member))
         self._last_member = member
+
+    @commands.command(name="paginate")
+    async def test_paginate(self, ctx):
+        pages = [1, 2, 3]
+        Paginator(ctx, pages).create_task()
