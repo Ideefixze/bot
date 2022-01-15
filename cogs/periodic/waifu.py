@@ -1,9 +1,13 @@
 import aioschedule
 import discord
 import random
+import requests
 from discord.ext import commands, tasks
+from xml.etree import ElementTree
 
 from .periodic import Periodic
+
+emojis = ['😍', '🥰', '😋', '😲', '👀', '❤️', '💓', '👌', '😳', '🥵']
 
 class Waifu(Periodic):
     """
@@ -29,4 +33,10 @@ class Waifu(Periodic):
 
         waifu = random.choice(list(self.waifus.items()))
         self.waifus.pop(waifu[0])
-        await self.bot.get_channel(self.channel).send(f"Dzisiejszą dziewczynką dnia jest: {waifu[1]}")
+
+        params = {"page":"dapi", "s":"post", "q":"index", "limit":50, "pid":0, "tags":waifu[0]+" solo"}
+        r = requests.get(f"https://safebooru.org/index.php", params=params)
+        posts = ElementTree.fromstring(r.content)
+
+        await self.bot.get_channel(self.channel).send(f"Dzisiejszą dziewczynką dnia jest: **{waifu[1]}** {random.choice(emojis)}")
+        await self.bot.get_channel(self.channel).send(f"{random.choice(posts).attrib['file_url']}")
