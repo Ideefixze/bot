@@ -1,4 +1,5 @@
 import asyncio
+import discord
 import random
 import re
 from MessageProcessor import *
@@ -7,7 +8,9 @@ random.seed()
 
 class ChannelStats(MessageProcessor):
     def __init__(self, channel):
-        self.channel = channel #todo: assert text channel (has name etc)
+        if channel.type is not discord.ChannelType.text:
+            raise TypeError(f"Can't gather statistics for channel of type {channel.type}")
+        self.channel = channel
         self.replies_queue = []
 
         #GIF checker processor
