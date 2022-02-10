@@ -2,7 +2,7 @@ import discord
 import secret
 from discord.ext import commands
 from cogs.hello import Greetings
-from ChannelStats import ChannelStats
+from bot.ChannelStats import ChannelStats
 
 bot = commands.Bot(command_prefix="=")
 bot.add_cog(Greetings(bot))

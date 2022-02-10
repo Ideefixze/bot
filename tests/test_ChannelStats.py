@@ -3,7 +3,9 @@ import discord
 import pytest
 from pytest_mock import MockerFixture
 from types import SimpleNamespace
-from ChannelStats import ChannelStats
+
+from bot.ChannelStats import ChannelStats
+
 
 def create_mock_channel(mocker, id, type, name=''):
     send_stub = mocker.stub(name='send_stub')
