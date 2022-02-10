@@ -2,7 +2,7 @@ import asyncio
 import discord
 import random
 import re
-from .MessageProcessor import *
+from MessageProcessor import *
 
 random.seed()
 
