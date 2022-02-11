@@ -1,11 +1,14 @@
 import discord
 import secret
 from discord.ext import commands
+
+from cogs.economy.economy import Economy
 from cogs.hello import Greetings
 from ChannelStats import ChannelStats
 
 bot = commands.Bot(command_prefix="=")
 bot.add_cog(Greetings(bot))
+bot.add_cog(Economy(bot))
 channels_statistics = {}
 
 @bot.event
