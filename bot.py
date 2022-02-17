@@ -2,13 +2,19 @@ import discord
 import secret
 from discord.ext import commands
 
-from cogs.economy.economy import Economy
 from cogs.hello import Greetings
 from ChannelStats import ChannelStats
 
+from cogs.economy.EconomySystem import EconomySystem
+from cogs.economy.economy import Economy
+from database.DatabaseHandler import DatabaseHandler
+from cogs.economy.Account import BaseAccount
+
+default_db_handler = DatabaseHandler(address='sqlite:///database.db', bases=[BaseAccount])
+
 bot = commands.Bot(command_prefix="=")
 bot.add_cog(Greetings(bot))
-bot.add_cog(Economy(bot))
+bot.add_cog(Economy(bot, EconomySystem(default_db_handler.session)))
 channels_statistics = {}
 
 @bot.event
