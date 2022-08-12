@@ -25,7 +25,7 @@ class Waifu(Periodic):
                   'lumine_(genshin_impact)': "Lumine"}
 
     def period(self):
-        return aioschedule.every().day.at("00:00")
+        return aioschedule.every(10).seconds
 
     async def periodic_task(self):
         if not self.waifus:

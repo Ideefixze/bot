@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands, tasks
+from discord.utils import get
 import aioschedule
 import asyncio
 import threading
@@ -15,8 +16,13 @@ class Periodic(commands.Cog):
         self.scheduler_running = None
 
         name = type(self).__name__.lower()
-        bot.command(name="schedule_"+name, pass_context=True)(self.schedule)
-        bot.command(name="unschedule_" + name, pass_context=True)(self.unschedule)
+        bot.command(name="schedule_"+name, pass_context=True, hidden=True)(self.schedule)
+        bot.command(name="unschedule_" + name, pass_context=True, hidden=True)(self.unschedule)
+
+    
+    async def cog_check(self, ctx):
+        #Check if user has manage messages perm
+        return ctx.author.guild_permissions.manage_messages
 
     def period(self):
         return aioschedule.every(3).seconds
